@@ -8,6 +8,7 @@ public class Product {
     private long quantity;
     private String img;
     private int categoryId;
+    private double orderPrice;
 
     public Product() {
     }
@@ -21,6 +22,14 @@ public class Product {
         this.img = img;
     }
 
+    public Product(int id, String name, double price, long quantity,String img ,double orderPrice) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.orderPrice = orderPrice;
+    }
+
     public Product(int id, String name, double price, String description, long quantity, String img, int categoryId) {
         this.id = id;
         this.name = name;
@@ -29,6 +38,14 @@ public class Product {
         this.quantity = quantity;
         this.img = img;
         this.categoryId = categoryId;
+    }
+
+    public double getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(double orderPrice) {
+        this.orderPrice = orderPrice;
     }
 
     public int getCategoryId() {

@@ -279,13 +279,15 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Manage <b>Product</b></h2>
+                        <h2>ManagerProduct</h2>
+                        <h2><a href="/views/index.jsp">Home</a></h2>
+
                     </div>
                     <div class="col-sm-6">
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
                         <%--                        <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>--%>
-                        <form action="/managerProduct">
-                            <input type="text" name="key" size="28px">
+                        <form action="/managerProduct?action=findByName" method="post">
+                            <input type="text" name="nameFind" size="28px">
                             <button class="btn btn-success">Find Product</button>
                         </form>
                     </div>
@@ -320,7 +322,7 @@
         </div>
     </div>
 </div>
-<!-- Edit Modal HTML -->
+<!-- Add Modal HTML -->
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -365,11 +367,21 @@
                         <label>Image</label>
                         <input type="text" name="img" class="form-control" required>
                     </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="categoryId" id="">
+                            <c:forEach items="${categoryList}" var="cate">
+                                <option value="${cate.id}" name="categoryId">${cate.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    
 <%--                    <div class="form-group">--%>
 <%--                        <label>Category</label>--%>
 <%--                        <input type="number" name="category" class="form-control" required>--%>
 <%--                    </div>--%>
-<%--                    --%>
+
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -380,64 +392,64 @@
     </div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Employee</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Price</label>
-                        <input type="text" name="price" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control" name="description" required></textarea>
-                    </div>
+<%--<div id="editEmployeeModal" class="modal fade">--%>
+<%--    <div class="modal-dialog">--%>
+<%--        <div class="modal-content">--%>
+<%--            <form>--%>
+<%--                <div class="modal-header">--%>
+<%--                    <h4 class="modal-title">Edit Employee</h4>--%>
+<%--                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--%>
+<%--                </div>--%>
+<%--                <div class="modal-body">--%>
 <%--                    <div class="form-group">--%>
-<%--                        <label>Action</label>--%>
-<%--                        <input type="text" name="action3" class="form-control" required>--%>
+<%--                        <label>Name</label>--%>
+<%--                        <input type="text" name="name" class="form-control" required>--%>
 <%--                    </div>--%>
 <%--                    <div class="form-group">--%>
-<%--                        <label>Capacity</label>--%>
-<%--                        <input type="text" name="capacity3" class="form-control" required>--%>
+<%--                        <label>Price</label>--%>
+<%--                        <input type="text" name="price" class="form-control" required>--%>
 <%--                    </div>--%>
 <%--                    <div class="form-group">--%>
-<%--                        <label>Barrel</label>--%>
-<%--                        <input type="text" name="barrel3" class="form-control" required>--%>
+<%--                        <label>Description</label>--%>
+<%--                        <textarea class="form-control" name="description" required></textarea>--%>
+<%--                    </div>--%>
+<%--&lt;%&ndash;                    <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <label>Action</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="text" name="action3" class="form-control" required>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <label>Capacity</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="text" name="capacity3" class="form-control" required>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <label>Barrel</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="text" name="barrel3" class="form-control" required>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <label>Weight</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="text" name="weight3" class="form-control" required>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
+<%--                    <div class="form-group">--%>
+<%--                      <label>Quantity</label>--%>
+<%--                       <input type="Number" name="quantity" class="form-control" required>--%>
 <%--                    </div>--%>
 <%--                    <div class="form-group">--%>
-<%--                        <label>Weight</label>--%>
-<%--                        <input type="text" name="weight3" class="form-control" required>--%>
+<%--                        <label>Image</label>--%>
+<%--                        <input type="text" name="img" class="form-control" required>--%>
 <%--                    </div>--%>
-                    <div class="form-group">
-                      <label>Quantity</label>
-                       <input type="Number" name="quantity" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input type="text" name="img" class="form-control" required>
-                    </div>
-<%--                    <div class="form-group">--%>
-<%--                        <label>Category</label>--%>
-<%--                        <input type="number" name="category3" class="form-control" required>--%>
-<%--                    </div>--%>
+<%--&lt;%&ndash;                    <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <label>Category</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="number" name="category3" class="form-control" required>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
 
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-info" value="Save">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<%--                </div>--%>
+<%--                <div class="modal-footer">--%>
+<%--                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">--%>
+<%--                    <input type="submit" class="btn btn-info" value="Save">--%>
+<%--                </div>--%>
+<%--            </form>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 </body>
 </html>

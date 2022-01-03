@@ -1,6 +1,7 @@
 package service;
 
 import dao.ProductDao;
+import model.Category;
 import model.Product;
 
 import java.util.ArrayList;
@@ -36,6 +37,12 @@ public class ProductService {
             }
         }
         return -1;
+    }
+    public List<Product> findProductByCategoryId(int categoryId){
+        return productDao.findProductByCategoryId(categoryId);
+    }
+    public List<Product> findProductByName(String nameFind){
+        return productDao.findProductByName(nameFind);
     }
 }
 

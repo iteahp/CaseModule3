@@ -30,9 +30,9 @@ public class ProductDao {
                 String description = resultSet.getString("description");
                 double price = resultSet.getDouble("price");
                 long quantity = resultSet.getLong("quantity");
-//                int categoryId = resultSet.getInt("categoryId");
+                int categoryId = resultSet.getInt("categoryId");
 
-                listProduct.add(new Product(id, name,  price,description,quantity,img));
+                listProduct.add(new Product(id, name,  price,description,quantity,img,categoryId));
             }
             return listProduct;
 
@@ -58,7 +58,7 @@ public class ProductDao {
     }
 
     public  void saveProduct(Product product) {
-        String saveSQl = "INSERT INTO product(name,price,description,quantity,img) VALUES (?,?,?,?,?)";
+        String saveSQl = "INSERT INTO product(name,price,description,quantity,img,categoryId) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(saveSQl);
             preparedStatement.setString(1,product.getName());
@@ -66,6 +66,7 @@ public class ProductDao {
             preparedStatement.setString(3,product.getDescription());
             preparedStatement.setLong(4,product.getQuantity());
             preparedStatement.setString(5,product.getImg());
+            preparedStatement.setInt(6,product.getCategoryId());
             preparedStatement.execute();
         }catch (Exception e){
             e.printStackTrace();
@@ -81,5 +82,57 @@ public class ProductDao {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public List<Product> findProductByCategoryId(int categoryId){
+        String sqlGetAll = "SELECT * FROM product where categoryId = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetAll);
+            preparedStatement.setInt(1,categoryId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Product> listProduct = new ArrayList<>();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String img = resultSet.getString("img");
+                String description = resultSet.getString("description");
+                double price = resultSet.getDouble("price");
+                long quantity = resultSet.getLong("quantity");
+
+                listProduct.add(new Product(id, name,  price,description,quantity,img,categoryId));
+            }
+            return listProduct;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<Product> findProductByName(String nameFind){
+        String sqlGetAll = "SELECT * FROM product where name like '%"+nameFind+"%\'";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetAll);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Product> listProduct = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String img = resultSet.getString("img");
+                String description = resultSet.getString("description");
+                double price = resultSet.getDouble("price");
+                long quantity = resultSet.getLong("quantity");
+                int categoryId = resultSet.getInt("categoryId");
+
+                listProduct.add(new Product(id, name,  price,description,quantity,img,categoryId));
+            }
+            return listProduct;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -58,13 +58,23 @@
 				</span>
 
       <div class="topbar-child2">
-					<span class="topbar-email">
-						fashe@example.com
-					</span>
+<%--					<span class="topbar-email">--%>
+<%--						fashe@example.com--%>
+<%--					</span>--%>
 
-        <div class="topbar-language rs1-select2">
-          <button type="button" class="btn btn-primary"><a href="/views/login.jsp">Login</a></button>
-        </div>
+<%--        <div class="topbar-language rs1-select2">--%>
+          <c:if test="${sessionScope.acc != null}">
+            <%--					<li><a href="#"><i class="fa fa-dollar"></i> Wallet: ${sessionScope.acc.balance}</a></li>--%>
+            <li><a href="#"><i class="fa fa-user-o"></i> Hello ${sessionScope.acc.name}</a></li>
+            <c:if test="${sessionScope.acc.roleId == 1}">
+              <li><a href="/managerProduct"><i class="fa fa-user-o"></i> Manager</a></li>
+            </c:if>
+            <li><a href="/account?action=logout"><i class="fa"></i> Logout</a></li>
+          </c:if>
+          <c:if test="${sessionScope.acc == null}">
+            <li><a href="/account?action=login"><i class="fa"></i> Login</a></li>
+          </c:if>
+<%--        </div>--%>
       </div>
     </div>
 
@@ -80,11 +90,11 @@
           <ul class="main_menu">
             <li>
               <a href="index.jsp">Home</a>
-              <ul class="sub_menu">
-                <li><a href="index.jsp">Homepage V1</a></li>
-                <li><a href="home-02.html">Homepage V2</a></li>
-                <li><a href="home-03.html">Homepage V3</a></li>
-              </ul>
+<%--              <ul class="sub_menu">--%>
+<%--                <li><a href="index.jsp">Homepage V1</a></li>--%>
+<%--                <li><a href="home-02.html">Homepage V2</a></li>--%>
+<%--                <li><a href="home-03.html">Homepage V3</a></li>--%>
+<%--              </ul>--%>
             </li>
 
             <li>
@@ -95,7 +105,7 @@
             </li>
 
             <li>
-              <a href="cart.html">Features</a>
+              <a href="/product?action=orderDetail">Features</a>
             </li>
 
             <li>
@@ -184,7 +194,7 @@
             <div class="header-cart-buttons">
               <div class="header-cart-wrapbtn">
                 <!-- Button -->
-                <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                <a href="cart.jsp" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
                   View Cart
                 </a>
               </div>
@@ -282,7 +292,7 @@
             <div class="header-cart-buttons">
               <div class="header-cart-wrapbtn">
                 <!-- Button -->
-                <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                <a href="cart.jsp" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
                   View Cart
                 </a>
               </div>
@@ -357,7 +367,7 @@
 
 
         <li class="item-menu-mobile">
-          <a href="cart.html">Features</a>
+          <a href="/product?action=orderDetail">Features</a>
         </li>
 
         <li class="item-menu-mobile">
@@ -571,7 +581,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Herschel supply co 25l
               </a>
 
@@ -604,7 +614,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Denim jacket blue
               </a>
 
@@ -637,7 +647,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Coach slim easton black
               </a>
 
@@ -670,7 +680,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Frayed denim shorts
               </a>
 
@@ -707,7 +717,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Herschel supply co 25l
               </a>
 
@@ -740,7 +750,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Denim jacket blue
               </a>
 
@@ -773,7 +783,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Coach slim easton black
               </a>
 
@@ -806,7 +816,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
                 Frayed denim shorts
               </a>
 
@@ -856,7 +866,7 @@
 
           <div class="ab-t-l sizefull flex-col-c-b p-l-15 p-r-15 p-b-20">
             <div class="t-center">
-              <a href="product-detail.html" class="dis-block s-text3 p-b-5">
+              <a href="productDetail.jsp" class="dis-block s-text3 p-b-5">
                 Gafas sol Hawkers one
               </a>
 

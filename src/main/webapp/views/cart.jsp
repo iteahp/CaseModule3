@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +34,7 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
 </head>
-<body class="animsition">
+<body class="animsition" style="display: contents">
 
 	<!-- Header -->
 	<header class="header1">
@@ -51,16 +54,28 @@
 				</span>
 
 				<div class="topbar-child2">
-					<span class="topbar-email">
-						fashe@example.com
-					</span>
+<%--					<span class="topbar-email">--%>
+<%--						fashe@example.com--%>
+<%--					</span>--%>
 
-					<div class="topbar-language rs1-select2">
-						<select class="selection-1" name="time">
-							<option>USD</option>
-							<option>EUR</option>
-						</select>
-					</div>
+<%--					<div class="topbar-language rs1-select2">--%>
+<%--						<select class="selection-1" name="time">--%>
+<%--							<option>USD</option>--%>
+<%--							<option>EUR</option>--%>
+<%--						</select>--%>
+<%--					</div>--%>
+	<c:if test="${sessionScope.acc != null}">
+		<%--					<li><a href="#"><i class="fa fa-dollar"></i> Wallet: ${sessionScope.acc.balance}</a></li>--%>
+		<li><a href="#"><i class="fa fa-user-o"></i> Hello ${sessionScope.acc.name}</a></li>
+		<c:if test="${sessionScope.acc.roleId == 1}">
+			<li><a href="/managerProduct"><i class="fa fa-user-o"></i> Manager</a></li>
+		</c:if>
+		<li><a href="/account?action=logout"><i class="fa"></i> Logout</a></li>
+	</c:if>
+	<c:if test="${sessionScope.acc == null}">
+		<li><a href="#"><i class="fa fa-user-o"></i> Guest</a></li>
+		<li><a href="/account?action=login"><i class="fa"></i> Login</a></li>
+	</c:if>
 				</div>
 			</div>
 
@@ -75,16 +90,16 @@
 					<nav class="menu">
 						<ul class="main_menu">
 							<li>
-								<a href="index.html">Home</a>
-								<ul class="sub_menu">
-									<li><a href="index.html">Homepage V1</a></li>
-									<li><a href="home-02.html">Homepage V2</a></li>
-									<li><a href="home-03.html">Homepage V3</a></li>
-								</ul>
+								<a href="/views/index.jsp">Home</a>
+<%--								<ul class="sub_menu">--%>
+<%--									<li><a href="index.html">Homepage V1</a></li>--%>
+<%--									<li><a href="home-02.html">Homepage V2</a></li>--%>
+<%--									<li><a href="home-03.html">Homepage V3</a></li>--%>
+<%--								</ul>--%>
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="/product">Shop</a>
 							</li>
 
 							<li class="sale-noti">
@@ -92,7 +107,7 @@
 							</li>
 
 							<li>
-								<a href="cart.html">Features</a>
+								<a href="/product?action=orderDetail">Features</a>
 							</li>
 
 							<li>
@@ -119,7 +134,7 @@
 					<span class="linedivide1"></span>
 
 					<div class="header-wrapicon2">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<img src="/views/cart.jsp" class="header-icon1 js-show-header-dropdown" alt="ICON">
 						<span class="header-icons-noti">0</span>
 
 						<!-- Header cart noti -->
@@ -143,7 +158,7 @@
 
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
+										<img href="/product?action=orderDetail" src="images/icons/icon-header-02.png" alt="IMG">
 									</div>
 
 									<div class="header-cart-item-txt">
@@ -181,7 +196,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="/product?action=orderDetail" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -216,9 +231,9 @@
 
 					<span class="linedivide2"></span>
 
-					<div class="header-wrapicon2">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
+					<div class="header-wrapicon2"><a href="/product?action=orderDetail"><img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON" ></a>
+
+						<span class="header-icons-noti">${listProductOrder.size()}</span>
 
 						<!-- Header cart noti -->
 						<div class="header-cart header-dropdown">
@@ -279,7 +294,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.jsp" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -313,20 +328,20 @@
 						</span>
 					</li>
 
-					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
-						<div class="topbar-child2-mobile">
-							<span class="topbar-email">
-								fashe@example.com
-							</span>
+<%--					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">--%>
+<%--						<div class="topbar-child2-mobile">--%>
+<%--							<span class="topbar-email">--%>
+<%--								fashe@example.com--%>
+<%--							</span>--%>
 
-							<div class="topbar-language rs1-select2">
-								<select class="selection-1" name="time">
-									<option>USD</option>
-									<option>EUR</option>
-								</select>
-							</div>
-						</div>
-					</li>
+<%--							<div class="topbar-language rs1-select2">--%>
+<%--								<select class="selection-1" name="time">--%>
+<%--									<option>USD</option>--%>
+<%--									<option>EUR</option>--%>
+<%--								</select>--%>
+<%--							</div>--%>
+<%--						</div>--%>
+<%--					</li>--%>
 
 					<li class="item-topbar-mobile p-l-10">
 						<div class="topbar-social-mobile">
@@ -339,17 +354,17 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
-						<ul class="sub-menu">
-							<li><a href="index.html">Homepage V1</a></li>
-							<li><a href="home-02.html">Homepage V2</a></li>
-							<li><a href="home-03.html">Homepage V3</a></li>
-						</ul>
+						<a href="/views/index.jsp">Home</a>
+<%--						<ul class="sub-menu">--%>
+<%--							<li><a href="index.html">Homepage V1</a></li>--%>
+<%--							<li><a href="home-02.html">Homepage V2</a></li>--%>
+<%--							<li><a href="home-03.html">Homepage V3</a></li>--%>
+<%--						</ul>--%>
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Shop</a>
+						<a href="/product">Shop</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -357,7 +372,7 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Features</a>
+						<a href="/product?acction=orderDetail">Features</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -397,79 +412,82 @@
 							<th class="column-4 p-l-70">Quantity</th>
 							<th class="column-5">Total</th>
 						</tr>
-
+                      <c:forEach items="${listProductOrder}" var="p">
 						<tr class="table-row">
+
 							<td class="column-1">
-								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="images/item-10.jpg" alt="IMG-PRODUCT">
-								</div>
+									<img src="${p.img}" alt="IMG-PRODUCT" width="150" height="200">
 							</td>
-							<td class="column-2">Men Tshirt</td>
-							<td class="column-3">$36.00</td>
+							<td class="column-2">${p.name}</td>
+							<td class="column-3">${p.orderPrice} $</td>
 							<td class="column-4">
 								<div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
+									<a href="/product?action=minus&&id=${p.id}">
+										<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
+									</button></a>
 
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="1">
 
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
+									<input class="size8 m-text18 t-center num-product" type="number" name="quantity" value="${p.quantity}">
+									<a href="/product?action=plus&&id=${p.id}">
+										<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
+									</button></a>
+
 								</div>
 							</td>
-							<td class="column-5">$36.00</td>
+							<td class="column-5">${p.price} $</td>
 						</tr>
+						</c:forEach>
 
-						<tr class="table-row">
-							<td class="column-1">
-								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="images/item-05.jpg" alt="IMG-PRODUCT">
-								</div>
-							</td>
-							<td class="column-2">Mug Adventure</td>
-							<td class="column-3">$16.00</td>
-							<td class="column-4">
-								<div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
+<%--						<tr class="table-row">--%>
+<%--							<td class="column-1">--%>
+<%--								<div class="cart-img-product b-rad-4 o-f-hidden">--%>
+<%--									<img src="images/item-05.jpg" alt="IMG-PRODUCT">--%>
+<%--								</div>--%>
+<%--							</td>--%>
+<%--							<td class="column-2">Mug Adventure</td>--%>
+<%--							<td class="column-3">$16.00</td>--%>
+<%--							<td class="column-4">--%>
+<%--								<div class="flex-w bo5 of-hidden w-size17">--%>
+<%--									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">--%>
+<%--										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>--%>
+<%--									</button>--%>
 
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product2" value="1">
+<%--									<input class="size8 m-text18 t-center num-product" type="number" name="num-product2" value="1">--%>
 
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-							</td>
-							<td class="column-5">$16.00</td>
-						</tr>
+<%--									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">--%>
+<%--										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>--%>
+<%--									</button>--%>
+<%--								</div>--%>
+<%--							</td>--%>
+<%--							<td class="column-5">$16.00</td>--%>
+<%--						</tr>--%>
 					</table>
 				</div>
 			</div>
 
-			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
-				<div class="flex-w flex-m w-full-sm">
-					<div class="size11 bo4 m-r-10">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="coupon-code" placeholder="Coupon Code">
-					</div>
+<%--			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">--%>
+<%--				<div class="flex-w flex-m w-full-sm">--%>
+<%--					--%>
 
-					<div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">
-						<!-- Button -->
-						<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-							Apply coupon
-						</button>
-					</div>
-				</div>
+<%--&lt;%&ndash;					<div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">&ndash;%&gt;--%>
+<%--&lt;%&ndash;						<!-- Button -->&ndash;%&gt;--%>
+<%--&lt;%&ndash;						<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">&ndash;%&gt;--%>
+<%--&lt;%&ndash;							Apply coupon&ndash;%&gt;--%>
+<%--&lt;%&ndash;						</button>&ndash;%&gt;--%>
+<%--&lt;%&ndash;					</div>&ndash;%&gt;--%>
+<%--				</div>--%>
 
-				<div class="size10 trans-0-4 m-t-10 m-b-10">
-					<!-- Button -->
-					<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-						Update Cart
-					</button>
-				</div>
-			</div>
+<%--				<div class="size10 trans-0-4 m-t-10 m-b-10">--%>
+<%--					<!-- Button -->--%>
+<%--					<a href="/product?action=updateCart">--%>
+<%--						<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">--%>
+<%--						Update Cart--%>
+<%--					</button></a>--%>
+
+<%--				</div>--%>
+<%--			</div>--%>
 
 			<!-- Total -->
 			<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
@@ -478,56 +496,56 @@
 				</h5>
 
 				<!--  -->
-				<div class="flex-w flex-sb-m p-b-12">
-					<span class="s-text18 w-size19 w-full-sm">
-						Subtotal:
-					</span>
+<%--				<div class="flex-w flex-sb-m p-b-12">--%>
+<%--					<span class="s-text18 w-size19 w-full-sm">--%>
+<%--						Subtotal:--%>
+<%--					</span>--%>
 
-					<span class="m-text21 w-size20 w-full-sm">
-						$39.00
-					</span>
-				</div>
+<%--					<span class="m-text21 w-size20 w-full-sm">--%>
+<%--						${sum}--%>
+<%--					</span>--%>
+<%--				</div>--%>
 
 				<!--  -->
-				<div class="flex-w flex-sb bo10 p-t-15 p-b-20">
-					<span class="s-text18 w-size19 w-full-sm">
-						Shipping:
-					</span>
+<%--				<div class="flex-w flex-sb bo10 p-t-15 p-b-20">--%>
+<%--					<span class="s-text18 w-size19 w-full-sm">--%>
+<%--						Shipping:--%>
+<%--					</span>--%>
 
-					<div class="w-size20 w-full-sm">
-						<p class="s-text8 p-b-23">
-							There are no shipping methods available. Please double check your address, or contact us if you need any help.
-						</p>
+<%--					<div class="w-size20 w-full-sm">--%>
+<%--						<p class="s-text8 p-b-23">--%>
+<%--							There are no shipping methods available. Please double check your address, or contact us if you need any help.--%>
+<%--						</p>--%>
 
-						<span class="s-text19">
-							Calculate Shipping
-						</span>
+<%--						<span class="s-text19">--%>
+<%--							Calculate Shipping--%>
+<%--						</span>--%>
 
-						<div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
-							<select class="selection-2" name="country">
-								<option>Select a country...</option>
-								<option>US</option>
-								<option>UK</option>
-								<option>Japan</option>
-							</select>
-						</div>
+<%--						<div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">--%>
+<%--							<select class="selection-2" name="country">--%>
+<%--								<option>Select a country...</option>--%>
+<%--								<option>US</option>--%>
+<%--								<option>UK</option>--%>
+<%--								<option>Japan</option>--%>
+<%--							</select>--%>
+<%--						</div>--%>
 
-						<div class="size13 bo4 m-b-12">
-						<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="state" placeholder="State /  country">
-						</div>
+<%--						<div class="size13 bo4 m-b-12">--%>
+<%--						<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="state" placeholder="State /  country">--%>
+<%--						</div>--%>
 
-						<div class="size13 bo4 m-b-22">
-							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">
-						</div>
+<%--						<div class="size13 bo4 m-b-22">--%>
+<%--							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">--%>
+<%--						</div>--%>
 
-						<div class="size14 trans-0-4 m-b-10">
-							<!-- Button -->
-							<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-								Update Totals
-							</button>
-						</div>
-					</div>
-				</div>
+<%--						<div class="size14 trans-0-4 m-b-10">--%>
+<%--							<!-- Button -->--%>
+<%--							<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">--%>
+<%--								Update Totals--%>
+<%--							</button>--%>
+<%--						</div>--%>
+<%--					</div>--%>
+<%--				</div>--%>
 
 				<!--  -->
 				<div class="flex-w flex-sb-m p-t-26 p-b-30">
@@ -536,15 +554,17 @@
 					</span>
 
 					<span class="m-text21 w-size20 w-full-sm">
-						$39.00
+						${sum} $
 					</span>
 				</div>
 
 				<div class="size15 trans-0-4">
 					<!-- Button -->
-					<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+					<a href="/product?action=checkOut">
+						<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
 						Proceed to Checkout
-					</button>
+					</button></a>
+
 				</div>
 			</div>
 		</div>

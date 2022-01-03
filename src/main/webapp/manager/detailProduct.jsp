@@ -280,7 +280,7 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Manage <b>Product</b></h2>
+                        <h2><a href="/managerProduct">Manage Product</a></h2>
                     </div>
                     <div class="col-sm-6">
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
@@ -330,7 +330,7 @@
 <%--                </tr>--%>
                 <tr>
                     <td>Image</td>
-                    <td>${requestScope["productFound"].getImg()}</td>
+                    <td><img src="${requestScope["productFound"].getImg()}" alt="Có ảnh ở đây cơ mà do lag đấy" width="500" height="600"></td>
                 </tr>
 <%--                <tr>--%>
 <%--                    <td>Category</td>--%>
@@ -341,9 +341,13 @@
                     <td>${requestScope["productFound"].getQuantity()}</td>
                 </tr>
                 <tr>
+                    <td>Category</td>
+                    <td>${requestScope["category"].getName()}</td>
+                </tr>
+                <tr>
                     <td>Service</td>
                     <td>
-                        <a href="/managerProduct?action=edit&id=${productFound.id}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>Edit</a>
+                        <a href="/managerProduct?action=update&id=${productFound.id}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>Edit</a>
                         <a onclick="return confirm('Are you sure?')" href="/managerProduct?action=delete&id=${productFound.id}" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>Delete</a>
                     </td>
                 </tr>

@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +33,7 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
 </head>
-<body class="animsition">
+<body class="animsition" style="display: contents;">
 
 	<!-- Header -->
 	<header class="header1">
@@ -51,16 +53,22 @@
 				</span>
 
 				<div class="topbar-child2">
-					<span class="topbar-email">
-						fashe@example.com
-					</span>
+<%--					<span class="topbar-email">--%>
+<%--						fashe@example.com--%>
+<%--					</span>--%>
 
-					<div class="topbar-language rs1-select2">
-						<select class="selection-1" name="time">
-							<option>USD</option>
-							<option>EUR</option>
-						</select>
-					</div>
+	<c:if test="${sessionScope.acc != null}">
+		<%--					<li><a href="#"><i class="fa fa-dollar"></i> Wallet: ${sessionScope.acc.balance}</a></li>--%>
+		<li><a href="#"><i class="fa fa-user-o"></i> Hello ${sessionScope.acc.name}</a></li>
+		<c:if test="${sessionScope.acc.roleId == 1}">
+			<li><a href="/managerProduct"><i class="fa fa-user-o"></i> Manager</a></li>
+		</c:if>
+		<li><a href="/account?action=logout"><i class="fa"></i> Logout</a></li>
+	</c:if>
+	<c:if test="${sessionScope.acc == null}">
+		<li><a href="#"><i class="fa fa-user-o"></i> Guest</a></li>
+		<li><a href="/account?action=login"><i class="fa"></i> Login</a></li>
+	</c:if>
 				</div>
 			</div>
 
@@ -75,16 +83,16 @@
 					<nav class="menu">
 						<ul class="main_menu">
 							<li>
-								<a href="index.html">Home</a>
-								<ul class="sub_menu">
-									<li><a href="index.html">Homepage V1</a></li>
-									<li><a href="home-02.html">Homepage V2</a></li>
-									<li><a href="home-03.html">Homepage V3</a></li>
-								</ul>
+								<a href="/views/index.jsp">Home</a>
+<%--								<ul class="sub_menu">--%>
+<%--									<li><a href="index.html">Homepage V1</a></li>--%>
+<%--									<li><a href="home-02.html">Homepage V2</a></li>--%>
+<%--									<li><a href="home-03.html">Homepage V3</a></li>--%>
+<%--								</ul>--%>
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="/product">Shop</a>
 							</li>
 
 							<li class="sale-noti">
@@ -92,7 +100,7 @@
 							</li>
 
 							<li>
-								<a href="cart.html">Features</a>
+								<a href="cart.jsp">Features</a>
 							</li>
 
 							<li>
@@ -181,7 +189,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.jsp" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -279,7 +287,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.jsp" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -339,17 +347,17 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
-						<ul class="sub-menu">
-							<li><a href="index.html">Homepage V1</a></li>
-							<li><a href="home-02.html">Homepage V2</a></li>
-							<li><a href="home-03.html">Homepage V3</a></li>
-						</ul>
+						<a href="/views/index.jsp">Home</a>
+<%--						<ul class="sub-menu">--%>
+<%--							<li><a href="index.html">Homepage V1</a></li>--%>
+<%--							<li><a href="home-02.html">Homepage V2</a></li>--%>
+<%--							<li><a href="home-03.html">Homepage V3</a></li>--%>
+<%--						</ul>--%>
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Shop</a>
+						<a href="/product">Shop</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -357,7 +365,7 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Features</a>
+						<a href="cart.jsp">Features</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -378,23 +386,23 @@
 
 	<!-- breadcrumb -->
 	<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
-		<a href="index.html" class="s-text16">
+		<a href="/views/index.jsp" class="s-text16">
 			Home
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
 
-		<a href="product.html" class="s-text16">
-			Women
+		<a href="/product?action=findByCate&&id=${category.id}" class="s-text16">
+			${category.name}
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
 
-		<a href="#" class="s-text16">
-			T-Shirt
-			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
-		</a>
+<%--		<a href="#" class="s-text16">--%>
+<%--			T-Shirt--%>
+<%--			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>--%>
+<%--		</a>--%>
 
 		<span class="s-text17">
-			Boxy T-Shirt with Roll Sleeve Detail
+			${productFound.name}
 		</span>
 	</div>
 
@@ -406,39 +414,39 @@
 					<div class="wrap-slick3-dots"></div>
 
 					<div class="slick3">
-						<div class="item-slick3" data-thumb="images/thumb-item-01.jpg">
+						<div class="item-slick3" data-thumb="${productFound.img}">
 							<div class="wrap-pic-w">
-								<img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
+								<img src="${productFound.img}" alt="IMG-PRODUCT">
 							</div>
 						</div>
 
-						<div class="item-slick3" data-thumb="images/thumb-item-02.jpg">
-							<div class="wrap-pic-w">
-								<img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
-							</div>
-						</div>
+<%--						<div class="item-slick3" data-thumb="images/thumb-item-02.jpg">--%>
+<%--							<div class="wrap-pic-w">--%>
+<%--								<img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">--%>
+<%--							</div>--%>
+<%--						</div>--%>
 
-						<div class="item-slick3" data-thumb="images/thumb-item-03.jpg">
-							<div class="wrap-pic-w">
-								<img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-							</div>
-						</div>
+<%--						<div class="item-slick3" data-thumb="images/thumb-item-03.jpg">--%>
+<%--							<div class="wrap-pic-w">--%>
+<%--								<img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">--%>
+<%--							</div>--%>
+<%--						</div>--%>
 					</div>
 				</div>
 			</div>
 
 			<div class="w-size14 p-t-30 respon5">
 				<h4 class="product-detail-name m-text16 p-b-13">
-					Boxy T-Shirt with Roll Sleeve Detail
+					${productFound.name}
 				</h4>
 
 				<span class="m-text17">
-					$22
+					${productFound.price} $
 				</span>
 
-				<p class="s-text8 p-t-10">
-					Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-				</p>
+<%--				<p class="s-text8 p-t-10">--%>
+<%--					Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.--%>
+<%--				</p>--%>
 
 				<!--  -->
 				<div class="p-t-33 p-b-60">
@@ -499,52 +507,50 @@
 				</div>
 
 				<div class="p-b-45">
-					<span class="s-text8 m-r-35">SKU: MUG-01</span>
-					<span class="s-text8">Categories: Mug, Design</span>
+<%--					<span class="s-text8 m-r-35">SKU: MUG-01</span>--%>
+					<span class="s-text8">Categories: ${category.name}</span>
 				</div>
 
 				<!--  -->
 				<div class="wrap-dropdown-content bo6 p-t-15 p-b-14 active-dropdown-content">
-					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
+					<h5 >
 						Description
-						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
-						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
 					</h5>
 
-					<div class="dropdown-content dis-none p-t-15 p-b-23">
-						<p class="s-text8">
-							Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
+					<div>
+						<p>
+							${productFound.description}
 						</p>
 					</div>
 				</div>
 
-				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14">
-					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
-						Additional information
-						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
-						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
-					</h5>
+<%--				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14">--%>
+<%--					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">--%>
+<%--						Additional information--%>
+<%--						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>--%>
+<%--						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>--%>
+<%--					</h5>--%>
 
-					<div class="dropdown-content dis-none p-t-15 p-b-23">
-						<p class="s-text8">
-							Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
-						</p>
-					</div>
-				</div>
+<%--					<div class="dropdown-content dis-none p-t-15 p-b-23">--%>
+<%--						<p class="s-text8">--%>
+<%--							${productFound.description}--%>
+<%--						</p>--%>
+<%--					</div>--%>
+<%--				</div>--%>
 
-				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14">
-					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
-						Reviews (0)
-						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
-						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
-					</h5>
+<%--				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14">--%>
+<%--					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">--%>
+<%--						Reviews (0)--%>
+<%--						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>--%>
+<%--						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>--%>
+<%--					</h5>--%>
 
-					<div class="dropdown-content dis-none p-t-15 p-b-23">
-						<p class="s-text8">
-							Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
-						</p>
-					</div>
-				</div>
+<%--					<div class="dropdown-content dis-none p-t-15 p-b-23">--%>
+<%--						<p class="s-text8">--%>
+<%--							${productFound.description}--%>
+<%--						</p>--%>
+<%--					</div>--%>
+<%--				</div>--%>
 			</div>
 		</div>
 	</div>
@@ -585,7 +591,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Herschel supply co 25l
 								</a>
 
@@ -618,7 +624,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Denim jacket blue
 								</a>
 
@@ -651,7 +657,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Coach slim easton black
 								</a>
 
@@ -684,7 +690,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Frayed denim shorts
 								</a>
 
@@ -721,7 +727,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Herschel supply co 25l
 								</a>
 
@@ -754,7 +760,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Denim jacket blue
 								</a>
 
@@ -787,7 +793,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Coach slim easton black
 								</a>
 
@@ -820,7 +826,7 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+								<a href="productDetail.jsp" class="block2-name dis-block s-text3 p-b-5">
 									Frayed denim shorts
 								</a>
 

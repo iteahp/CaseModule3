@@ -1,7 +1,9 @@
 package controller;
 
 import dao.ProductDao;
+import model.Category;
 import model.Product;
+import service.CategoryService;
 import service.ProductService;
 
 import javax.servlet.RequestDispatcher;
@@ -11,11 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/managerProduct")
 public class ManagerServlet extends HttpServlet {
     ProductService productService = new ProductService();
+    CategoryService categoryService = new CategoryService();
     List<Product> productList = productService.getProductList();
     RequestDispatcher requestDispatcher;
     @Override
@@ -33,13 +37,23 @@ public class ManagerServlet extends HttpServlet {
                 showUpdateForm(req,resp);
                 break;
             }
+
+            case "view" :{
+                productDetail(req,resp);
+                break;
+            }
             default: {
                 showProductList(req,resp);
                 break;
             }
         }
     }
-
+    private void findByName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nameFind = req.getParameter("nameFind");
+        req.setAttribute("productList",productService.findProductByName(nameFind));
+        requestDispatcher = req.getRequestDispatcher("/manager/managerProduct.jsp");
+        requestDispatcher.forward(req,resp);
+    }
     private void showUpdateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         productList=productService.getProductList();
@@ -57,8 +71,13 @@ public class ManagerServlet extends HttpServlet {
 
     private void showProductList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("productList",productService.getProductList());
+        req.setAttribute("categoryList",categoryService.getCategoryList());
         requestDispatcher = req.getRequestDispatcher("/manager/managerProduct.jsp");
         requestDispatcher.forward(req,resp);
+    }
+    private Category getCategoryByProductId(Product product){
+        int categoryId = product.getCategoryId();
+       return categoryService.findCategoryById(categoryId);
     }
 
     @Override
@@ -72,14 +91,15 @@ public class ManagerServlet extends HttpServlet {
                 createProduct(req,resp);
                 break;
             }
+            case "findByName":{
+                findByName(req,resp);
+                break;
+            }
             case "update" :{
                 updateProduct(req,resp);
                 break;
             }
-            case "view" :{
-                productDetail(req,resp);
-                break;
-            }
+
             default: {
                 showProductList(req,resp);
                 break;
@@ -90,7 +110,9 @@ public class ManagerServlet extends HttpServlet {
     private void productDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         Product productFound = productService.getProductList().get(productService.findIndexById(id));
+        Category category = getCategoryByProductId(productFound);
         req.setAttribute("productFound",productFound);
+        req.setAttribute("category",category);
         requestDispatcher = req.getRequestDispatcher("/manager/detailProduct.jsp");
         requestDispatcher.forward(req,resp);
     }
@@ -113,7 +135,8 @@ public class ManagerServlet extends HttpServlet {
         String description = req.getParameter("description");
         long quantity = Long.parseLong(req.getParameter("quantity"));
         String img = req.getParameter("img");
-        Product product = new Product(1,name,price,description,quantity,img);
+        int categoryId = Integer.parseInt(req.getParameter("categoryId"));
+        Product product = new Product(1,name,price,description,quantity,img,categoryId);
         productService.addProduct(product);
         resp.sendRedirect("/managerProduct");
     }
