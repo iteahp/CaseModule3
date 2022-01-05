@@ -2,6 +2,7 @@ package controller;
 
 import model.Account;
 import service.AccountService;
+import service.OrderService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +31,8 @@ public class AccountServlet extends HttpServlet {
             case "logout" : {
                 HttpSession session = req.getSession();
                 session.removeAttribute("acc");
+                OrderService orderService = new OrderService();
+                orderService.resetOrderDetail();
                 resp.sendRedirect("/product");
                 break;
             }

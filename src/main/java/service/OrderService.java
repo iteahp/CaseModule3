@@ -1,5 +1,10 @@
 package service;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
+import dao.OrderDao;
+import dao.OrderDetailDao;
+import model.Order;
+import model.OrderDetail;
 import model.Product;
 
 import java.util.ArrayList;
@@ -7,7 +12,8 @@ import java.util.List;
 
 public class OrderService {
     List<Product> productListAddOrder = new ArrayList<>();
-
+    OrderDao orderDao = new OrderDao();
+   OrderDetailDao orderDetailDao = new OrderDetailDao();
     public List<Product> getProductListAddOrder(){
         return productListAddOrder;
     }
@@ -32,5 +38,23 @@ public class OrderService {
             sum+=productOrder.getPrice();
         }
         return sum;
+    }
+    public void  saveOrder(Order order){
+        orderDao.saveOrder(order);
+
+    }
+    public void saveOrderDetail(){
+        ProductService productService =new ProductService();
+        for (Product pr: productListAddOrder
+             ) {
+            OrderDetail orderDetail = new OrderDetail(1,orderDao.findOrderMax().getId(),pr.getId(),pr.getQuantity());
+            orderDetailDao.saveOrderDetail(orderDetail);
+            double quantity = productService.getProductList().get(productService.findIndexById(pr.getId())).getQuantity() -pr.getQuantity();
+            productService.updateQuantityProduct(pr.getId(),quantity);
+        }
+       resetOrderDetail();
+    }
+    public void resetOrderDetail(){
+        productListAddOrder = new ArrayList<>();
     }
 }

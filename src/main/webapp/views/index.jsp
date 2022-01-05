@@ -67,7 +67,13 @@
             <%--					<li><a href="#"><i class="fa fa-dollar"></i> Wallet: ${sessionScope.acc.balance}</a></li>--%>
             <li><a href="#"><i class="fa fa-user-o"></i> Hello ${sessionScope.acc.name}</a></li>
             <c:if test="${sessionScope.acc.roleId == 1}">
-              <li><a href="/managerProduct"><i class="fa fa-user-o"></i> Manager</a></li>
+              <li><a href="/managerProduct"><i class="fa fa-user-o"></i> Manager</a>
+                <ul class="sub_menu">
+                  <li><a href="/managerProduct">Manager Product</a></li>
+                  <li><a href="home-02.html">Manager Order</a></li>
+                  <li><a href="home-03.html">Manager Account</a></li>
+                </ul>
+              </li>
             </c:if>
             <li><a href="/account?action=logout"><i class="fa"></i> Logout</a></li>
           </c:if>
@@ -80,7 +86,7 @@
 
     <div class="wrap_header">
       <!-- Logo -->
-      <a href="index.jsp" class="logo">
+      <a href="/views/index.jsp" class="logo">
         <img src="images/icons/logo.png" alt="IMG-LOGO">
       </a>
 
@@ -89,7 +95,7 @@
         <nav class="menu">
           <ul class="main_menu">
             <li>
-              <a href="index.jsp">Home</a>
+              <a href="/views/index.jsp">Home</a>
 <%--              <ul class="sub_menu">--%>
 <%--                <li><a href="index.jsp">Homepage V1</a></li>--%>
 <%--                <li><a href="home-02.html">Homepage V2</a></li>--%>

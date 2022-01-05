@@ -1,6 +1,8 @@
 package dao;
 
 import model.Order;
+import model.OrderDetail;
+import model.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,41 +12,44 @@ import java.util.List;
 
 public class OrderDetailDao {
     private Connection connection = ConnectMySql.getConnection();
-    public List<Order> getAllOrder() {
-        String sqlGetAll = "SELECT * FROM orders ";
+    public List<OrderDetail> getAllOrderDetail() {
+        String sqlGetAll = "SELECT * FROM orderdetail ";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlGetAll);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            List<Order> orderLists = new ArrayList<>();
+            List<OrderDetail> orderDetailList = new ArrayList<>();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                int accountId = resultSet.getInt("accountId");
-                double totalPrice = resultSet.getDouble("totalPrice");
-                orderLists.add(new Order(id,accountId,totalPrice));
+                int orderId = resultSet.getInt("orderId");
+                int productId = resultSet.getInt("productId");
+                double quantity = resultSet.getDouble("quantity");
+                orderDetailList.add(new OrderDetail(id,orderId,productId,quantity));
             }
-            return orderLists;
+            return orderDetailList;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    public  boolean saveOrder(Order order) {
+    public  boolean saveOrderDetail(OrderDetail orderDetail) {
         boolean result=false;
-        String saveSQl = "INSERT INTO orders(accountId,totalPrice) VALUES (?,?)";
+        String saveSQl = "INSERT INTO orderdetail (orderId,productId,quantity) VALUES (?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(saveSQl);
-            preparedStatement.setInt(1,order.getAccountId());
-            preparedStatement.setDouble(2,order.getTotalPrice());
+            preparedStatement.setInt(1,orderDetail.getOrderId());
+            preparedStatement.setInt(2,orderDetail.getProductId());
+            preparedStatement.setDouble(3,orderDetail.getQuantity());
             result = preparedStatement.executeUpdate()>0;
         }catch (Exception e){
             e.printStackTrace();
         }
         return result;
     }
+
     public  void deleteOrder(int id){
         String deleteSQL = "DELETE from orders where id=?";
         try {

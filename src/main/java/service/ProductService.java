@@ -44,5 +44,19 @@ public class ProductService {
     public List<Product> findProductByName(String nameFind){
         return productDao.findProductByName(nameFind);
     }
+    public void updateQuantityProduct(int productId,double quantity){
+        productDao.updateQuantityProduct(productId,quantity);
+    }
+    public  int countPage(){
+        int page = productDao.countProduct()/8;
+        if ((productDao.countProduct()%8 )!=0){
+            page = page+1;
+        }
+        System.out.println(page);
+        return page;
+    }
+    public List<Product> getListProductByPage(int page){
+        return productDao.getProductByPacking(page);
+    }
 }
 

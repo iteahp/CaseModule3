@@ -8,6 +8,9 @@ public class Order {
     private double totalPrice;
     private Date date;
 
+    public Order() {
+    }
+
     public Order(int id, int accountId) {
         this.id = id;
         this.accountId = accountId;

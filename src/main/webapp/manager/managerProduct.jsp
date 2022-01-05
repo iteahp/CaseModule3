@@ -280,7 +280,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <h2>ManagerProduct</h2>
-                        <h2><a href="/views/index.jsp">Home</a></h2>
+                        <h2><a href="/views/index.jsp">Home</a> <a href="/managerCategory">Category</a></h2>
 
                     </div>
                     <div class="col-sm-6">
@@ -317,8 +317,13 @@
                         </td>
                     </tr>
                 </c:forEach>
+
                 </tbody>
+
             </table>
+            <c:forEach begin="1" end="${countPage}" var="i" >
+                <b><a href="/managerProduct?action=showByPage&&page=${i}">${i}</a></b>
+          </c:forEach>
         </div>
     </div>
 </div>

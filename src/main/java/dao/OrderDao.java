@@ -47,6 +47,28 @@ public class OrderDao {
         }
         return result;
     }
+    public Order findOrderMax(){
+        String sqlGetAll = "SELECT * FROM orders where id = (select max(id) from orders);";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlGetAll);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Order order = new Order();
+
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int accountId = resultSet.getInt("accountId");
+                double totalPrice = resultSet.getDouble("totalPrice");
+                 order = new Order(id,accountId,totalPrice);
+
+            }
+            return order;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public  void deleteOrder(int id){
         String deleteSQL = "DELETE from orders where id=?";
         try {

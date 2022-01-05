@@ -42,12 +42,26 @@ public class ManagerServlet extends HttpServlet {
                 productDetail(req,resp);
                 break;
             }
+            case "showByPage" : {
+                showProductByPage(req,resp);
+                break;
+            }
             default: {
                 showProductList(req,resp);
                 break;
             }
         }
     }
+
+    private void showProductByPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int page = Integer.parseInt(req.getParameter("page"));
+        req.setAttribute("productList",productService.getListProductByPage(page));
+        req.setAttribute("categoryList",categoryService.getCategoryList());
+        req.setAttribute("countPage",productService.countPage());
+        requestDispatcher = req.getRequestDispatcher("/manager/managerProduct.jsp");
+        requestDispatcher.forward(req,resp);
+    }
+
     private void findByName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nameFind = req.getParameter("nameFind");
         req.setAttribute("productList",productService.findProductByName(nameFind));
@@ -70,8 +84,9 @@ public class ManagerServlet extends HttpServlet {
     }
 
     private void showProductList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("productList",productService.getProductList());
+        req.setAttribute("productList",productService.getListProductByPage(1));
         req.setAttribute("categoryList",categoryService.getCategoryList());
+        req.setAttribute("countPage",productService.countPage());
         requestDispatcher = req.getRequestDispatcher("/manager/managerProduct.jsp");
         requestDispatcher.forward(req,resp);
     }

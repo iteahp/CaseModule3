@@ -1,6 +1,9 @@
 package controller;
 
+import dao.OrderDao;
+import model.Account;
 import model.Category;
+import model.Order;
 import model.Product;
 import service.CategoryService;
 import service.OrderService;
@@ -12,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class ProductServlet extends HttpServlet {
     RequestDispatcher requestDispatcher;
     CategoryService categoryService = new CategoryService();
     OrderService orderService = new OrderService();
+    OrderDao orderDao = new OrderDao();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       String action = req.getParameter("action");
@@ -67,8 +72,13 @@ public class ProductServlet extends HttpServlet {
       }
     }
 
-    private void checkOutOrder(HttpServletRequest req, HttpServletResponse resp) {
-
+    private void checkOutOrder(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession();
+        Account account = (Account) session.getAttribute("acc");
+        Order order = new Order(1,account.getId(),orderService.totalListOrder());
+        orderService.saveOrder(order);
+        orderService.saveOrderDetail();
+        resp.sendRedirect("/product");
     }
 
     private void plusProductOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -151,6 +161,7 @@ public class ProductServlet extends HttpServlet {
          req.setAttribute("productList",productService.getProductList());
          req.setAttribute("categoryList",categoryService.getCategoryList());
          req.setAttribute("listProductOrder",orderService.getProductListAddOrder());
+         req.setAttribute("countPage",productService.countPage());
          requestDispatcher = req.getRequestDispatcher("views/product.jsp");
          requestDispatcher.forward(req,resp);
     }
